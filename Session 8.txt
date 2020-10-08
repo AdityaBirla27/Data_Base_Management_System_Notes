@@ -1,0 +1,322 @@
+Session 8 : Date: 7th Sept., 2020
+
+Date Functions
+
+To display system date:
+
+select sysdate
+from dual
+
+O/p:
+
+1. months_between():
+
+select months_between('20-SEP-20','31-AUG-20')
+from dual
+
+o/p:
+
+.64516129032258064516129032258064516129
+
+
+2. add_months()
+
+select add_months('20-SEP-20',2)
+from dual
+
+o/p:
+
+20-NOV-20
+
+3. next_day(): It returns the date of next day
+select next_day('07-SEP-20','FRIDAY')
+from dual
+
+4. last_day(): It returns last date of specified month
+
+select last_day('07-FEB-19')
+from dual
+
+O/p:
+
+28-FEB-19
+
+5. round(): 
+Assume sysdate: 07-SEP-20
+
+select round(sysdate,'YEAR')
+from dual
+o/p:
+01-JAN-21
+
+select round(sysdate,'MONTH')
+from dual
+o/p:
+01-SEP-20
+
+6. trunc()
+select trunc(sysdate,'YEAR')
+from dual
+o/p:
+01-JAN-20
+
+select trunc(sysdate,'MONTH')
+from dual
+o/p:
+01-SEP-20
+-----------------------------------------------------------------------------------
+
+					View
+
+It is a logical table which is created from one or more tables or from another view.
+View doesn't contain its own data.
+View is a window through which we can access data from tables.
+
+Advantages:
+
+1. It provides security
+2. It makes complex query easy
+3. We can create any no of views from one or more tables
+
+Syntax:
+
+create [or replace] view view_name
+as
+select statement
+
+e.g.
+
+create view emp
+as
+select id,name,dept
+from employee
+
+
+There are 2 types of views:
+
+1. Simple view:can be created from single table and not used group functions, group by clause, joins
+
+2. Complex view: group functions(max, min, avg, count, sum), group by clause, joins
+
+
+2 tables:
+
+employee
+dept
+
+create table dept
+(
+did number(2) primary key,
+dname varchar2(20))
+
+create or replace view emp
+as
+select *
+from employee natural join dept
+
+
+create or replace view emp
+as
+select max(salary) as max_sal
+from employee
+
+create or replace view emp
+as
+select dept,max(salary) as max_sal
+from employee
+group by dept
+
+-----------------------------------------------------------------------------------
+
+				Session 9: 8th Sept., 2020
+DML operations on view
+
+insert
+delete
+update
+
+create or replace view emp
+as
+select id,name,dept
+from employee
+
+insert operation:
+
+insert into emp values(8,'Sanjay','MKT')
+
+
+delete operation:
+
+Syntax:
+
+delete from emp
+where id=8
+
+
+Update operation:
+change name of employee as amita whose id as 1
+
+
+update emp
+set name='amita'
+where id=1
+
+
+DML opearions cannot be performed on view in following conditions:
+
+---- if view contains group functions, group by clause
+e.g.
+
+
+create or replace view emp
+as
+select dept, max(salary) as max_sal
+from employee
+group by dept
+
+
+insert into emp values('Sales',2000).........not possible because max_sal colm not present in employee table
+
+
+---if view contains joins 
+
+
+create or replace view emp
+as
+select *
+from employee natural join dept
+
+
+insert into emp(id,name,salary) values(8,'sanjay',3000).....not possible
+
+------------------------------------------------------------------------------
+
+			Set operators
+
+union
+union all
+intersect
+minus
+
+1. union: it is used to display data from first table or second table but repeated entries display only once
+
+depositor
+
+create table depositor
+(id number(2) primary key,
+name varchar2(20),
+balance number(7,2))
+
+
+
+create table borrower
+(id number(2) primary key,
+name varchar2(20),
+loan number(7,2))
+
+
+select id,name from borrower
+union
+select id,name from depositor
+
+2. union all: It is same as union but it display duplicate rows also
+
+select id,name from borrower
+union all
+select id,name from depositor
+
+3. intersect
+
+It is used to display data which is present in both tables
+
+e.g.
+
+display those employees having bank account as well as taken a loan from bank
+select id,name from borrower
+intersect
+select id,name from depositor
+
+4. minus: It is used to display data from 1st table but not from second table or vice versa
+
+Q. display those cust having account but not taken loan
+
+select id,name from depositor
+minus
+select id,name from borrower
+
+Q. Display those cust taken loan but not having account
+
+select id,name from borrower
+minus
+select id,name from depositor
+
+
+savepoint:
+
+It is used to create a transaction marker
+
+Syntax:
+
+savepoint marker;
+
+e.g.
+
+savepoint A;
+
+e.g.
+
+insert...
+commit;
+insert........
+update......
+savepoint A
+delete....
+insert .......
+savepoint B
+update.....
+rollback  .....it rollback all the DML oprns after last commit
+
+rolback to A
+rolback to B
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,203 @@
+			Session 11: 15th Sept., 2020
+				    Joins
+
+1. cross join
+2. equijoin
+3. non-equijoin
+4. natural join
+5. inner join: This is used to join 2 tables at a time and produces same o/p like natural join i.e rows will be displayed having matching values in common colm
+
+Employee
+
+ID	NAME	SALARY	DNO
+2	santosh	3000	10
+1	amita	4000	10
+3	amita	5000	20
+4	Samit	2000	30
+5	Samita	6000	30
+6	Sameer	5500	-
+7	Aanand	5000	-
+
+Dept
+
+DNO	DNAME
+10	IT
+20	MKT
+30	Admin
+40	HR
+
+
+select id,name,salary,dno,dname
+from employee natural join dept
+
+
+select id,name,salary,e.dno,dname
+from employee e inner join dept d
+on(e.dno=d.dno)
+
+select id,name,salary,e.dno,dname
+from employee e cross join dept d
+where e.dno=d.dno
+
+select id,name,salary,e.dno,dname
+from employee e,dept d
+where e.dno=d.dno
+
+
+D	NAME	SALARY	DNO	DNAME
+2	santosh	3000	10	IT
+1	amita	4000	10	IT
+3	amita	5000	20	MKT
+4	Samit	2000	30	Admin
+5	Samita	6000	30	Admin
+
+
+
+6. outer join
+
+It is used to display matching as well as non matching rows
+
+3 types:
+
+a. left outer join: it display matching rows from both tables. and non matching from left side table
+
+select id,name,salary,e.dno,d.dno,dname
+from employee e left outer join dept d
+on(e.dno=d.dno)
+
+OR
+
+select id,name,salary,e.dno,d.dno,dname
+from employee e,dept d
+where e.dno=d.dno(+)
+
+
+ID	NAME	SALARY	DNO	DNO	DNAME
+1	amita	4000	10	10	IT
+2	santosh	3000	10	10	IT
+3	amita	5000	20	20	MKT
+5	Samita	6000	30	30	Admin
+4	Samit	2000	30	30	Admin
+7	Aanand	5000	-	-	-
+6	Sameer	5500	-
+
+
+b. right outer join: it display matching rows from both tables. and non matching from right side table
+
+select id,name,salary,e.dno,d.dno,dname
+from employee e right outer join dept d
+on(e.dno=d.dno)
+
+OR
+
+select id,name,salary,e.dno,d.dno,dname
+from employee e,dept d
+where e.dno(+)=d.dno
+
+ID	NAME	SALARY	DNO	DNO	DNAME
+2	santosh	3000	10	10	IT
+1	amita	4000	10	10	IT
+3	amita	5000	20	20	MKT
+4	Samit	2000	30	30	Admin
+5	Samita	6000	30	30	Admin
+-	-	-	-	40	HR
+
+
+c. full outer join: it display matching as well as non matching rows from both tables
+
+select id,name,salary,e.dno,d.dno,dname
+from employee e full outer join dept d
+on(e.dno=d.dno)
+
+
+
+ID	NAME	SALARY	DNO	DNO	DNAME
+1	amita	4000	10	10	IT
+2	santosh	3000	10	10	IT
+3	amita	5000	20	20	MKT
+5	Samita	6000	30	30	Admin
+4	Samit	2000	30	30	Admin
+7	Aanand	5000	-	-	-
+6	Sameer	5500	-	-	-
+-	-	-	-	40	HR
+
+7. self join....VVImp from placement point of view
+one table join with itself
+
+
+ID	NAME	SALARY	DNO	MGR
+2	santosh	3000	10	6
+1	amita	4000	10	6
+3	amita	5000	20	5
+4	Samit	2000	30	5
+5	Samita	6000	30	6
+6	Sameer	5500	-	7
+7	Aanand	5000	-	-
+
+Display employee and their managers
+
+select worker.name as "Employee",manager.name as "Manager"
+from employee worker,employee manager
+where worker.mgr=manager.id
+
+O/p:
+
+Employee	Manager
+santosh		Sameer
+amita		Sameer
+amita		Samita
+Samit		Samita
+Samita		Sameer
+Sameer		Aanand
+
+
+8. join with using clause, join with on clause
+
+select id,name,salary,e.dno,dname
+from employee e join dept d
+on(e.dno=d.dno)
+
+OR
+
+select id,name,salary,dno,dname
+from employee join dept 
+using(dno)
+
+O/p:
+
+ID	NAME	SALARY	DNO	DNAME
+2	santosh	3000	10	IT
+1	amita	4000	10	IT
+3	amita	5000	20	MKT
+4	Samit	2000	30	Admin
+5	Samita	6000	30	Admin
+
+Q. placement 
+
+Display top 3 employees having max salary
+
+....Top-N Analysis
+
+select rownum,id,name,salary
+from (select * 
+       from employee
+       order by salary desc).............It is called as inline view
+where rownum<=3
+
+O/p:
+
+ID	NAME	SALARY
+5	Samita	6000
+6	Sameer	5500
+3	amita	5000
+
+
+
+
+
+
+
+
+
+
+

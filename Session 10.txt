@@ -1,0 +1,231 @@
+			Session 10 : 14th Sept., 2020
+				    Joins
+
+cross join
+equijoin
+non-equijoin
+natural join
+inner join
+outer join
+self join...........placement point of view ....IImp
+
+
+create table dept
+(dno number(2) primary key,
+dname varchar2(10))
+
+alter table employee
+add dno number(2) references dept(dno)
+
+
+
+Dept
+
+DNO	DNAME
+10	IT
+20	MKT
+30	Admin
+40	HR
+
+Employee
+
+ID	NAME	SALARY	DNO
+2	santosh	3000	10
+1	amita	4000	10
+3	amita	5000	20
+4	Samit	2000	30
+5	Samita	6000	30
+6	Sameer	5500	-
+7	Aanand	5000	-
+
+1. cross join:
+
+It is used to join 2 tables
+If 1st table has m rows and other has n rows
+join create m*n rows
+e.g.
+m=3
+n=5
+rows: 15
+
+
+select * 
+from employee,dept
+
+ID	NAME	SALARY	DNO	DNO	DNAME
+2	santosh	3000	10	10	IT
+1	amita	4000	10	10	IT
+3	amita	5000	20	10	IT
+4	Samit	2000	30	10	IT
+5	Samita	6000	30	10	IT
+6	Sameer	5500	-	10	IT
+7	Aanand	5000	-	10	IT
+2	santosh	3000	10	20	MKT
+1	amita	4000	10	20	MKT
+3	amita	5000	20	20	MKT
+4	Samit	2000	30	20	MKT
+5	Samita	6000	30	20	MKT
+6	Sameer	5500	-	20	MKT
+7	Aanand	5000	-	20	MKT
+2	santosh	3000	10	30	Admin
+1	amita	4000	10	30	Admin
+3	amita	5000	20	30	Admin
+4	Samit	2000	30	30	Admin
+5	Samita	6000	30	30	Admin
+6	Sameer	5500	-	30	Admin
+7	Aanand	5000	-	30	Admin
+2	santosh	3000	10	40	HR
+1	amita	4000	10	40	HR
+3	amita	5000	20	40	HR
+4	Samit	2000	30	40	HR
+5	Samita	6000	30	40	HR
+6	Sameer	5500	-	40	HR
+7	Aanand	5000	-	40	HR
+
+
+OR
+
+select * 
+from employee cross join dept
+
+select id,name,e.dno,d.dno,dname
+from employee e cross join dept d
+
+ID	NAME	DNO	DNO	DNAME
+2	santosh	10	10	IT
+1	amita	10	10	IT
+3	amita	20	10	IT
+4	Samit	30	10	IT
+5	Samita	30	10	IT
+6	Sameer	-	10	IT
+7	Aanand	-	10	IT
+2	santosh	10	20	MKT
+1	amita	10	20	MKT
+3	amita	20	20	MKT
+4	Samit	30	20	MKT
+5	Samita	30	20	MKT
+6	Sameer	-	20	MKT
+7	Aanand	-	20	MKT
+2	santosh	10	30	Admin
+1	amita	10	30	Admin
+3	amita	20	30	Admin
+4	Samit	30	30	Admin
+5	Samita	30	30	Admin
+6	Sameer	-	30	Admin
+7	Aanand	-	30	Admin
+2	santosh	10	40	HR
+1	amita	10	40	HR
+3	amita	20	40	HR
+4	Samit	30	40	HR
+5	Samita	30	40	HR
+6	Sameer	-	40	HR
+7	Aanand	-	40	HR
+
+2. Equijoin
+
+if equality condition added to the cross join then it is called as equijoin
+
+e.g.
+
+select id,name,e.dno,d.dno,dname
+from employee e cross join dept d
+where e.dno=d.dno
+
+
+O/p:
+
+ID	NAME	DNO	DNO	DNAME
+2	santosh	10	10	IT
+1	amita	10	10	IT
+3	amita	20	20	MKT
+4	Samit	30	30	Admin
+5	Samita	30	30	Admin
+
+3. Non-equijoin
+ it doesn't have equality condition
+
+select id,name,salary,e.dno,d.dno,dname
+from employee e cross join dept d
+where salary between 4000 and 5500
+
+ID	NAME	SALARY	DNO	DNO	DNAME
+1	amita	4000	10	10	IT
+1	amita	4000	10	20	MKT
+1	amita	4000	10	30	Admin
+1	amita	4000	10	40	HR
+3	amita	5000	20	10	IT
+3	amita	5000	20	20	MKT
+3	amita	5000	20	30	Admin
+3	amita	5000	20	40	HR
+6	Sameer	5500	-	10	IT
+6	Sameer	5500	-	20	MKT
+6	Sameer	5500	-	30	Admin
+6	Sameer	5500	-	40	HR
+7	Aanand	5000	-	10	IT
+7	Aanand	5000	-	20	MKT
+7	Aanand	5000	-	30	Admin
+7	Aanand	5000	-	40	HR
+
+4. natural join
+
+O/p is same as equijoin
+In equijoin, it is compulsory to specify common colm in where condition
+But in natural join, it is not required to specify commom colm.... 
+
+Employee....dno
+Dept........did
+
+............then natural join will not work
+In NJ... common colm name must be same and data type must be same
+
+But in equijoin, it is not required
+
+...
+where e.dno=d.did
+
+
+e.g.
+
+
+select id,name,dno,dname
+from employee natural join dept 
+
+ID	NAME	DNO	DNAME
+2	santosh	10	IT
+1	amita	10	IT
+3	amita	20	MKT
+4	Samit	30	Admin
+5	Samita	30	Admin
+
+More than 2 tables:
+
+select *
+from employee natural join dept natural join location
+
+DNAME	DNO	ID	NAME	SALARY	LOC
+IT	10	1	amita	4000	Mumbai
+IT	10	2	santosh	3000	Mumbai
+
+
+OR
+
+select id,name,salary,e.dno,d.dname,loc
+from employee e,dept d,location l
+where e.dno=d.dno and d.dname=l.dname
+
+O/p:
+
+Same as above
+
+
+
+
+
+
+
+
+
+
+
+
+

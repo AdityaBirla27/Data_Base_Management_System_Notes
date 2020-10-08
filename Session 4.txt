@@ -1,0 +1,110 @@
+DDL
+DML
+DCL
+TCL
+
+Data Retrieval Command ...VIMP
+
+select
+
+Syntax:
+select * |col1,col2,..colN |expression
+from table_name
+where condition
+
+Guidelines:
+1. not case sensitive  select, SELECT 
+2. U cannot abbreviate sql commands e.g. describe or desc iSQL* plus command
+3. It is better to write each clause on separate line
+
+
+1. Display all the employees
+
+select *
+from employee
+
+
+2. Display id, name and salary of employees
+
+select id,salary,name
+from employee
+
+
+3. Display those emp whose salary is more than 3000
+select *
+from employee
+where salary>30000
+
+
+4. Display those emp who are working in mkt dept
+select *
+from employee
+where dept='MKT'
+
+Note:
+
+To compare string and date, we need to write in quotes
+standard format: DD-MON-YY e.g. 11-AUG-20
+
+5. working in mkt dept and salary more than 3000
+select *
+from employee
+where dept='MKT' and salary>3000
+
+
+6. whose name starts with 'S'......VIMP
+
+select *
+from employee
+where name like 'S%'
+
+7. ends with 'a'
+select *
+from employee
+where name like '%a'
+
+second letter is 'a'
+select *
+from employee
+where name like '_a%'
+
+employees having 'a' in name
+
+8. salary is between 2000 and 5000
+
+select *
+from employee
+where salary >=2000 and salary<=5000
+
+OR
+
+select *
+from employee
+where salary between 2000 and 5000
+
+9. salary is either 2000, 3000 or 4000
+
+select *
+from employee
+where salary in(2000,3000,4000)
+
+
+10. display annual salary of employees 
+
+select id,name,salary*12
+from employee
+
+OR
+
+select id,name,salary*12 "Annual Salary"
+from employee
+
+11. display ans of 200+300*4+400-100/10
+select 200+300*4+400-100/10
+from dual
+
+
+
+
+
+

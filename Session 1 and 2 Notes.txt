@@ -1,0 +1,266 @@
+				
+				Welcome to 
+				    VAC 
+				    on
+			     Oracle DB and SQL
+
+Types of commands in SQL
+
+
+DBMS....
+Oracle
+Sql server
+Sybase
+
+tool which is used to store database, manage
+
+
+database: It is a place where data can be stored in the form of table
+
+
+DBA: 
+
+Table: it is a collection of rows and columns
+
+Types of commands in SQL
+
+
+purpose
+syntax
+example
+
+1. DDL (Data Defn Lang.)
+a. create:
+
+It is used to create a table
+
+Syntax:
+
+create table table_name
+(
+col1 data_type(size) constraints,
+col2 data_type(size) constraints,
+	:
+	:
+colN data_type(size) constraints,
+constraints);
+
+e.g.
+create table employee 
+(
+id number(3) primary key,
+name varchar2(20),
+salary number(7,2),
+dept varchar2(10)
+);
+
+
+b. drop:
+It is used to delete table
+
+Syntax:
+
+drop table table_name
+
+e.g.
+
+drop table employee
+
+c. truncate
+It is used to delete all the data from the table but table structure remains (empty)
+
+syntax:
+truncate table table_name;
+
+e.g.
+
+truncate table employee
+
+d. rename
+
+It is used to rename table
+
+Syntax:
+
+rename old_table_name to new_table_name
+
+e.g.
+
+rename employee to emp
+
+//To create duplicate table:
+
+create table employee
+as 
+select * from emp
+
+
+-----------------------------------------------------------------------------------
+				    Session 2
+				4th August, 2020
+DDL
+a. create
+b. drop
+c. truncate
+d. rename
+e. alter:
+
+It is used to perform operations on the columns
+
+i. add:
+
+It is used to add new column
+
+create table employee 
+(
+id number(3) primary key,
+name varchar2(20),
+salary number(7,2),
+dept varchar2(10)
+);
+
+Syntax:
+
+alter table table_name
+add col_name data_type(size)
+
+e.g.
+
+alter table employee
+add age number(2) 
+
+ii. drop:
+It is used to delete column
+
+Syntax:
+
+alter table table_name
+drop column col_name
+
+e.g.
+
+alter table employee
+drop column age
+
+iii. modify
+It is used to change data type or size of a column
+Syntax:
+
+alter table table_name
+modify column_name data_type(size)
+
+e.g.
+
+alter table employee
+modify id number(4)
+
+iv. rename:
+
+Syntax:
+
+alter table table_name
+rename column old_col_name to new_col_name
+
+e.g.
+
+alter table employee
+rename column id to eid
+
+
+2. DML(Data Manipulation Lang)
+a. insert
+
+It is used to insert row/record/tuple into table
+
+Syntax:
+
+insert into table_name[(col1,col2,...colN)]
+values(val1,val2,......valN)
+
+e.g.
+
+insert into employee
+values(2,'santosh',3000,'MKT',32)
+
+insert into employee(eid,name,salary,dept)
+values(3,'santosh',3000,'MKT')
+
+insert into employee(name,eid,salary,dept,age)
+values('sanket',4,3000,'MKT',56)
+
+b. delete:
+
+It is used to delete rows that satisfies the condition.
+
+Syntax:
+
+delete from table_name
+where condition;
+
+e.g.
+
+delete those employees whose salary is more than or equal to 3000.
+If we dont write condition then all rows will be deleted.
+
+delete from employee
+where salary>=3000
+
+
+Q. What is the difference between drop, truncate and delete....Placement
+
+DDL commands are auto committed...saved
+DML commands are not auto committed.  To save, we need to use commit command.
+To cancel changes, rollback command can be used.
+
+insert
+
+commit
+insert
+create table
+rollback
+
+
+c. update
+
+3. DCL(Data Control Lang)
+a. grant
+b. revoke
+
+4. TCL(Transaction Control Lang)
+a. commit
+b. rollback
+
+
+
+5. Data Retrieval Command 
+select
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

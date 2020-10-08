@@ -1,0 +1,69 @@
+----------------------------Session 3-------------------------
+
+c. update
+It is used to update data that satisfies the condition.
+If we dont write condition then all the rows will be updated.
+
+Syntax:
+
+update table_name
+set col1=val1, col2=val2,....
+where condition
+
+e.g.
+
+update salary by 10% of those employees whose salary is less than or equal to 3000.
+
+update employee
+set salary=salary*1.1
+where salary <=3000
+
+
+3. DCL(Data Control Lang).....DBA....PL/SQL developer..track
+
+
+a. grant: It is used to give permisions to one or more users
+
+Syntax:
+
+grant priv1,priv2,.....privN
+to user1, user2,...,userN
+
+e.g.
+
+grant create table 
+to santosh
+
+To create user:
+
+create user santosh
+identified by santosh123
+
+To give permission on tablespace
+
+grant unlimited tablespace 
+to santosh
+
+b. revoke:It is used to cancel the permissions
+
+Syntax:
+
+revoke priv1,priv2,.....privN
+from user1, user2,...,userN
+
+e.g.
+
+revoke create table
+from santosh
+
+4. TCL(Transaction Control Lang)...only for DML
+
+a. commit:  To save the changes made by DML commands
+
+commit
+
+b. rollback: To cancel the changes made by DML 
+rollback
+
+5. Data Retrieval Command ...VIMP
+select

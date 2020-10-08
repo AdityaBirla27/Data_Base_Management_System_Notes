@@ -1,0 +1,270 @@
+				Session 12: 21st Sept., 2020
+					Constraints
+
+primary key
+foreign key
+not null
+unique
+check
+
+Constraints means a set of rules or restrictions that data in the table must satisfy.
+
+Constraints can be specify at the column or table level
+
+Constraints can be created after table creation also by using alter table command
+
+All constraints are stored into user_constraints table
+
+e.g.
+
+select *
+from user_constraints
+where table_name='EMP1'
+
+
+If we dont specify any constraint name then system gives name as SYS_CN
+
+Primary key:
+
+data in a primary key column must be unique and not null
+
+e.g.
+
+create table emp1
+(id number(2) primary key,
+name varchar2(20))
+
+OR
+
+
+create table emp1
+(id number(2),
+name varchar2(20),
+primary key(id))
+
+OR
+
+create table emp1
+(id number(2),
+name varchar2(20),
+constraint emp_pk primary key(id))
+
+OR
+
+create table emp1
+(id number(2) constraint emp_pk primary key,
+name varchar2(20))
+
+
+After table creation, it is possible to create a PK
+
+alter table emp1
+add constraint emp1_pk primary key(id)
+
+
+Composite key:
+
+create table emp1
+(id number(2),
+name varchar2(20),
+constraint emp_pk primary key(id,name))
+
+
+Foreign key:
+
+This key refers the primary key of another or same table
+
+We can insert null data in FK
+But we cannot insert data in FK which is not present in PK
+
+FK can be created at table level as well as column level
+
+Column level:
+
+create table dept1......................parent table
+(dno number(2) primary key,
+dname varchar2(20))
+
+create table emp1
+(id number(2) primary key,
+name varchar2(20),
+dno number(2) references dept1(dno))
+
+OR
+create table emp1
+(id number(2) primary key,
+name varchar2(20),
+dno number(2) constraint emp1_fk references dept1(dno))
+
+
+Table level:
+
+
+create table emp1
+(id number(2) primary key,
+name varchar2(20),
+dno number(2),
+foreign key(dno) references dept1(dno))....constriant name is given by system  (SYS_CN)
+
+OR
+
+create table emp1
+(id number(2) primary key,
+name varchar2(20),
+dno number(2),
+constraint emp1_fk foreign key(dno) references dept1(dno))....constraint name is given by user i.e. emp1_fk
+
+
+Not null:
+
+data should not be null
+.....This is created at column level only....why?  self study...
+
+
+e.g.
+
+create table emp2
+(id number(2) primary key,
+name varchar2(20),
+dno number(2) not null)
+
+
+insert into emp2(id,name) values(1,'amit')
+
+ORA-01400: cannot insert NULL into ("SYSTEM"."EMP2"."DNO")
+
+
+Following command is invalid:
+
+
+create table emp2
+(id number(2) primary key,
+name varchar2(20),
+dno number(2),
+constraint dno_NN not null(dno))
+
+
+unique:
+
+data must be unique but null values can be allowed.
+
+PK = UK + NN
+
+
+e.g.
+
+create table emp2
+(id number(2) unique,
+name varchar2(20),
+dno number(2))
+
+
+insert into emp2 values('','amit',10)
+
+
+check
+
+we can specify condition that data must satisfy
+
+e.g.
+
+create table emp2
+(id number(2) unique,
+salary number(7,2) check (salary > 2000),
+name varchar2(20),
+dno number(2))
+
+OR
+
+create table emp2
+(id number(2) unique,
+salary number(7,2), 
+name varchar2(20),
+dno number(2),
+check (salary > 2000))
+
+
+
+
+select * 
+from user_constraints
+where table_name='EMP1'
+
+
+alter table emp1
+drop constraint SYS_C004097
+
+
+
+insert into emp2(id,salary) values(1,1000)
+
+O/p:
+
+ORA-02290: check constraint (SYSTEM.SYS_C004101) violated
+
+e.g.
+
+insert into emp2(id,salary) values(1,3000)
+
+o/p:
+
+1 row inserted.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

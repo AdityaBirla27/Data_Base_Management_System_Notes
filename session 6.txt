@@ -1,0 +1,252 @@
+Session 6
+
+Subquery
+
+A query inside another query is called as subquery
+
+Syntax:
+
+select col_names.................................outer query
+from table_name
+where col_name operator (select col_name
+			from table_name
+			where condition) ............ inner query
+
+first inner query will be executed and o/p of inner query will be given to outer query.
+
+Final result will be provided by outer query
+
+Q. display those employees whose salary is more than 3000
+
+select *
+from employee
+where salary>3000
+
+Q. display those employees whose salary is more than amit salary
+select *
+from employee
+where salary > (select salary
+		from employee
+		where name='amit')
+
+
+2 types of subqeury:
+
+1. single row subquery:
+It returns only one value to the outer query.
+<, <=, >, >=, =, <> (!=)  (single row operators)
+
+
+e.g.
+
+select *
+from employee
+where salary > (select salary
+		from employee
+		where name='amit')
+
+2. multiple row subquery
+
+It returns more than one values.
+
+It uses in, any, all ......(multiple row operators)
+
+e.g.
+display those employees whose salary is more than employees working in mkt dept.
+
+select *
+from employee
+where salary > all(select salary
+		from employee
+		where dept='MKT')
+
+
+Q. display those employees whose salary is same as those employees working in mkt dept.
+
+
+select *
+from employee
+where salary in(select salary
+		from employee
+		where dept='MKT')
+
+OR
+
+select *
+from employee
+where salary =any(select salary
+		from employee
+		where dept='MKT')
+
+Note:
+
+U must use relational operator with any and all
+
+Is it possible to use more than 2 subqueries?
+
+Q. display those employees whose salary is more than amit salary and those employees working in MKT dept
+
+select *
+from employee
+where salary >(select salary
+		from employee
+		where name='amit')
+and
+salary >all(select salary
+		from employee
+		where dept='MKT')
+
+
+Q. Can i use different tables in outer and inner query?
+
+create table department
+(dept varchar2(20) primary key,
+location varchar2(20))
+
+
+Q.display those employees who are working in mumbai department
+
+select *
+from employee
+where dept in(select dept
+              from department
+              where location='Mumbai')
+
+
+Q. display those employees who are working in mumbai dept and salary more than mkt dept employees
+
+select *
+from employee
+where dept in(select dept
+              from department
+              where location='Mumbai')
+and 
+salary > all(select salary
+              from employee
+             where dept='Admin')
+
+
+
+select....
+....
+where col > (select...
+		from ...
+		where col2 >(select col..
+				from...
+				where ....)
+	    )
+
+Self study:
+
+1. display top ten employees having maximum salary
+2. display employee and his/her manager
+
+
+id	name	salary	mgrid
+1	amit	1000	4
+2	samit	2000	4
+3	raman	3000	2
+4	john	4000	--
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
